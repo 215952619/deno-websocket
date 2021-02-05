@@ -1,0 +1,51 @@
+@host = http://localhost
+@port = 3000
+
+@origin = {{host}}:{{port}}
+@baseUrl = {{origin}}/todos
+
+### 获取Todo列表
+GET {{baseUrl}} HTTP/1.1
+# @name getTodos
+Origin: {{origin}}
+
+{
+    "number": 2,
+    "size": 2
+}
+
+@todoId = {{ getTodos.response.body.$[0].id }}
+
+### 获取Todo详情
+GET {{baseUrl}}/{{todoId}}
+# @name getTodo
+Origin: {{origin}}
+
+
+### 新增Todo
+POST {{baseUrl}} HTTP/1.1
+# @name createTodo
+Origin: {{origin}}
+content-type: application/json
+
+{
+    "userId": 666,
+    "title": "Learn Deno"
+}
+
+### 更新Todo
+PUT {{baseUrl}}/{{todoId}} HTTP/1.1
+# @name updateTodo
+Origin: {{origin}}
+content-type: application/json
+
+{
+    "userId": 666,
+    "title": "Learn Deno",
+    "completed": true  
+}
+
+### 删除Todo
+DELETE  {{baseUrl}}/{{todoId}} HTTP/1.1
+# @name deleteTodo
+Origin: {{origin}}
